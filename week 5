@@ -1,0 +1,90 @@
+class Smartphone:
+    def __init__(self, brand, model, storage, camera_mp):
+        self.brand = brand
+        self.model = model
+        self.storage = storage
+        self.camera_mp = camera_mp
+        self.apps = []  # Initialize an empty list for apps
+
+    def install_app(self, app_name):
+        self.apps.append(app_name)
+        print(f"{app_name} installed on {self.brand} {self.model}")
+
+    def take_photo(self):
+        print(f"Photo taken with {self.camera_mp} MP camera")
+
+    def display_info(self):
+        print(f"Brand: {self.brand}")
+        print(f"Model: {self.model}")
+        print(f"Storage: {self.storage} GB")
+        print(f"Camera: {self.camera_mp} MP")
+        print(f"Apps: {', '.join(self.apps) or 'None'}") #Nicely handles the case of no apps
+
+
+class GamingPhone(Smartphone):  # Inheritance
+    def __init__(self, brand, model, storage, camera_mp, cooling_system):
+        super().__init__(brand, model, storage, camera_mp)  # Call parent constructor
+        self.cooling_system = cooling_system
+
+    def play_game(self, game_name):
+        print(f"Playing {game_name} on {self.brand} {self.model} with {self.cooling_system} cooling")
+
+    def display_info(self): #Overriding the display_info method
+         super().display_info()
+         print(f"Cooling System: {self.cooling_system}")
+
+
+
+# Example Usage:
+my_phone = Smartphone("Samsung", "Galaxy S23", 256, 50)
+my_phone.install_app("Instagram")
+my_phone.install_app("TikTok")
+my_phone.take_photo()
+my_phone.display_info()
+
+gaming_phone = GamingPhone("ROG", "Phone 7", 512, 64, "Vapor Chamber")
+gaming_phone.play_game("Genshin Impact")
+gaming_phone.display_info()
+
+
+
+# Activity 2: Polymorphism Challenge!
+
+class Animal:
+    def move(self):
+        print("Animal moves generically") #Base implementation
+
+class Dog(Animal):
+    def move(self):
+        print("Dog walks")
+
+class Bird(Animal):
+    def move(self):
+        print("Bird flies")
+
+class Fish(Animal):
+    def move(self):
+        print("Fish swims")
+
+
+# Polymorphism in action:
+animals = [Dog(), Bird(), Fish()]
+
+for animal in animals:
+    animal.move()  # Each object calls its own specific move() method
+
+#Another example of polymorphism
+def animal_sound(animal: Animal): #Type hinting for clarity
+    if isinstance(animal, Dog):
+        print("Woof!")
+    elif isinstance(animal, Bird):
+        print("Chirp!")
+    elif isinstance(animal, Fish):
+        print("Blub!")
+    else:
+        print("Generic animal sound")
+
+animal_sound(Dog()) # Woof!
+animal_sound(Bird()) # Chirp!
+animal_sound(Fish()) # Blub!
+animal_sound(Animal()) # Generic animal sound
